@@ -15,9 +15,10 @@ public class TestBase {
     protected WebDriver driver;
     @Before
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver",
-                AppConfig.getChromeDriverPath());
-         driver = new ChromeDriver();
+        String browser= System.getProperty("browser","chrome");
+
+
+         driver = DriverFactory.getWebDriver(browser);
 
         driver.get(AppConfig.getSiteUrl());
     }
