@@ -3,9 +3,11 @@ package org.fasttrackit;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.Properties;
@@ -34,6 +36,23 @@ public class TestBase {
         }
         actions.click().perform();
     }
+ protected void waitForPageToLoad(long timeout){
+        long waited=0;
 
-
+        long  pauseTime=500;
+        do {
+            try {
+                Thread.sleep(pauseTime);
+            } catch (InterruptedException e) {
+                System.out.println("Failed to wait for page to load.");
+            }
+            waited+=pauseTime;
+        }while(waited<= timeout && !((JavascriptExecutor )driver)
+            .executeScript("return document.readyState")
+            .equals("complete"));
+ }
+       protected  <T> T initElemets(Class <T> pageObjectClass){
+     waitForPageToLoad(10);
+        return PageFactory.initElements(driver,pageObjectClass);
+    }
 }

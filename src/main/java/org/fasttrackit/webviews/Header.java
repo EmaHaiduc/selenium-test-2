@@ -11,7 +11,7 @@ public class Header {
     private WebElement searchField;
 
     public void search (String keyword){
-        searchField.sendKeys("vase"+ Keys.ENTER);
+        searchField.sendKeys(keyword+ Keys.ENTER);
 
     }
 
